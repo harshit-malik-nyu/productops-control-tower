@@ -1,0 +1,32 @@
+{
+  "scope": "Synthetic single-host SQLite experiment. Four processes contend for one writer. No distributed throughput, multi-region reliability or production SLA claim.",
+  "rows": 100000,
+  "processes_started": 4,
+  "jobs_by_worker": {
+    "worker-0": 100
+  },
+  "reconciled": true,
+  "metrics": {
+    "day": "2026-01-01",
+    "events": 100000,
+    "accounts": 10000,
+    "buyers": 2000
+  },
+  "seconds": {
+    "enqueue": 0.134933,
+    "consume": 1.092772,
+    "publish": 0.221928,
+    "total": 1.449633
+  },
+  "environment": {
+    "python": "3.12.14",
+    "sqlite": "3.53.1",
+    "system": "Linux"
+  },
+  "source_sha256": {
+    "__init__.py": "6ccdd874ad90d11caf51c2f6cac9fa502f6db4e248675f14b436199979d871f7",
+    "core.py": "cb15183c58787c06cbbd551671fbc48d33a24c6947a45b29ea0bc710f93e9927",
+    "demo.py": "47ec3fdcf1facf3dc0fe2070dce18b0d3835e5d502a8b3eb2f94ba499beb2255",
+    "load.py": "9544ecf362cf16a472967dfa71e2aef860d2fab4ad6cf37bdeddedddb62643f2"
+  }
+}

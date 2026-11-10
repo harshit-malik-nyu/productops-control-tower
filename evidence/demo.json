@@ -1,0 +1,649 @@
+{
+  "scope": "Executed synthetic local demonstration. Replay only; no customer incident, user study or production SLA claim.",
+  "frames": [
+    {
+      "title": "Trusted baseline",
+      "explanation": "Two accounts, one buyer. Report version 1 is published after all work completes.",
+      "jobs": [
+        {
+          "id": "baseline",
+          "state": "done",
+          "token": 1,
+          "attempts": 1,
+          "remediates": null
+        }
+      ],
+      "incidents": [],
+      "trusted_report": {
+        "version": 1,
+        "digest": "0cc1990a461d48fd4ebac70c60476f9ca4880953d3c44ff61ef12ae92297ba14",
+        "daily": [
+          {
+            "accounts": 2,
+            "buyers": 1,
+            "day": "2026-01-01",
+            "events": 2
+          }
+        ],
+        "metric": "daily distinct buyers / observed accounts; not a causal conversion estimate",
+        "source_digest": "72801d6d50fee02bff8317dbaaf3a9d43e7b955e4fa1da1d1104912ebba8d00d"
+      },
+      "audit": [
+        {
+          "id": 1,
+          "action": "queued",
+          "detail": "{\"digest\":\"9a2e02e4b30057a29c40f3bde44ad517cbc2424bb02e3edb9a184e742c064a2b\",\"job\":\"baseline\"}"
+        },
+        {
+          "id": 2,
+          "action": "claimed",
+          "detail": "{\"job\":\"baseline\",\"token\":1,\"worker\":\"worker\"}"
+        },
+        {
+          "id": 3,
+          "action": "completed",
+          "detail": "{\"duplicates\":0,\"inserted\":2,\"job\":\"baseline\"}"
+        },
+        {
+          "id": 4,
+          "action": "published",
+          "detail": "{\"digest\":\"0cc1990a461d48fd4ebac70c60476f9ca4880953d3c44ff61ef12ae92297ba14\",\"version\":1}"
+        }
+      ]
+    },
+    {
+      "title": "Duplicate delivery",
+      "explanation": "A different job redelivers identical events. No extra rows or report version appear.",
+      "jobs": [
+        {
+          "id": "baseline",
+          "state": "done",
+          "token": 1,
+          "attempts": 1,
+          "remediates": null
+        },
+        {
+          "id": "duplicate-delivery",
+          "state": "done",
+          "token": 1,
+          "attempts": 1,
+          "remediates": null
+        }
+      ],
+      "incidents": [],
+      "trusted_report": {
+        "version": 1,
+        "digest": "0cc1990a461d48fd4ebac70c60476f9ca4880953d3c44ff61ef12ae92297ba14",
+        "daily": [
+          {
+            "accounts": 2,
+            "buyers": 1,
+            "day": "2026-01-01",
+            "events": 2
+          }
+        ],
+        "metric": "daily distinct buyers / observed accounts; not a causal conversion estimate",
+        "source_digest": "72801d6d50fee02bff8317dbaaf3a9d43e7b955e4fa1da1d1104912ebba8d00d"
+      },
+      "audit": [
+        {
+          "id": 1,
+          "action": "queued",
+          "detail": "{\"digest\":\"9a2e02e4b30057a29c40f3bde44ad517cbc2424bb02e3edb9a184e742c064a2b\",\"job\":\"baseline\"}"
+        },
+        {
+          "id": 2,
+          "action": "claimed",
+          "detail": "{\"job\":\"baseline\",\"token\":1,\"worker\":\"worker\"}"
+        },
+        {
+          "id": 3,
+          "action": "completed",
+          "detail": "{\"duplicates\":0,\"inserted\":2,\"job\":\"baseline\"}"
+        },
+        {
+          "id": 4,
+          "action": "published",
+          "detail": "{\"digest\":\"0cc1990a461d48fd4ebac70c60476f9ca4880953d3c44ff61ef12ae92297ba14\",\"version\":1}"
+        },
+        {
+          "id": 5,
+          "action": "queued",
+          "detail": "{\"digest\":\"9a2e02e4b30057a29c40f3bde44ad517cbc2424bb02e3edb9a184e742c064a2b\",\"job\":\"duplicate-delivery\"}"
+        },
+        {
+          "id": 6,
+          "action": "claimed",
+          "detail": "{\"job\":\"duplicate-delivery\",\"token\":1,\"worker\":\"worker\"}"
+        },
+        {
+          "id": 7,
+          "action": "completed",
+          "detail": "{\"duplicates\":2,\"inserted\":0,\"job\":\"duplicate-delivery\"}"
+        }
+      ]
+    },
+    {
+      "title": "Incident opened; release blocked",
+      "explanation": "An unexpected email field fails the allowlist. The entire batch rolls back; the last trusted report remains version 1.",
+      "jobs": [
+        {
+          "id": "bad-schema",
+          "state": "failed",
+          "token": 1,
+          "attempts": 1,
+          "remediates": null
+        },
+        {
+          "id": "baseline",
+          "state": "done",
+          "token": 1,
+          "attempts": 1,
+          "remediates": null
+        },
+        {
+          "id": "duplicate-delivery",
+          "state": "done",
+          "token": 1,
+          "attempts": 1,
+          "remediates": null
+        }
+      ],
+      "incidents": [
+        {
+          "job_id": "bad-schema",
+          "reason": "Event schema mismatch",
+          "state": "open",
+          "replacement": null
+        }
+      ],
+      "trusted_report": {
+        "version": 1,
+        "digest": "0cc1990a461d48fd4ebac70c60476f9ca4880953d3c44ff61ef12ae92297ba14",
+        "daily": [
+          {
+            "accounts": 2,
+            "buyers": 1,
+            "day": "2026-01-01",
+            "events": 2
+          }
+        ],
+        "metric": "daily distinct buyers / observed accounts; not a causal conversion estimate",
+        "source_digest": "72801d6d50fee02bff8317dbaaf3a9d43e7b955e4fa1da1d1104912ebba8d00d"
+      },
+      "audit": [
+        {
+          "id": 1,
+          "action": "queued",
+          "detail": "{\"digest\":\"9a2e02e4b30057a29c40f3bde44ad517cbc2424bb02e3edb9a184e742c064a2b\",\"job\":\"baseline\"}"
+        },
+        {
+          "id": 2,
+          "action": "claimed",
+          "detail": "{\"job\":\"baseline\",\"token\":1,\"worker\":\"worker\"}"
+        },
+        {
+          "id": 3,
+          "action": "completed",
+          "detail": "{\"duplicates\":0,\"inserted\":2,\"job\":\"baseline\"}"
+        },
+        {
+          "id": 4,
+          "action": "published",
+          "detail": "{\"digest\":\"0cc1990a461d48fd4ebac70c60476f9ca4880953d3c44ff61ef12ae92297ba14\",\"version\":1}"
+        },
+        {
+          "id": 5,
+          "action": "queued",
+          "detail": "{\"digest\":\"9a2e02e4b30057a29c40f3bde44ad517cbc2424bb02e3edb9a184e742c064a2b\",\"job\":\"duplicate-delivery\"}"
+        },
+        {
+          "id": 6,
+          "action": "claimed",
+          "detail": "{\"job\":\"duplicate-delivery\",\"token\":1,\"worker\":\"worker\"}"
+        },
+        {
+          "id": 7,
+          "action": "completed",
+          "detail": "{\"duplicates\":2,\"inserted\":0,\"job\":\"duplicate-delivery\"}"
+        },
+        {
+          "id": 8,
+          "action": "queued",
+          "detail": "{\"digest\":\"92db6985a69cdbd7caf11ff50b05f9bff215d48d1a85e7f45bde34d6f6076de5\",\"job\":\"bad-schema\"}"
+        },
+        {
+          "id": 9,
+          "action": "claimed",
+          "detail": "{\"job\":\"bad-schema\",\"token\":1,\"worker\":\"worker\"}"
+        },
+        {
+          "id": 10,
+          "action": "rejected",
+          "detail": "{\"job\":\"bad-schema\",\"reason\":\"Event schema mismatch\"}"
+        }
+      ]
+    },
+    {
+      "title": "Replacement verified",
+      "explanation": "Corrected data commits, but the incident is still open. A successful job alone does not authorize publication.",
+      "jobs": [
+        {
+          "id": "bad-schema",
+          "state": "failed",
+          "token": 1,
+          "attempts": 1,
+          "remediates": null
+        },
+        {
+          "id": "baseline",
+          "state": "done",
+          "token": 1,
+          "attempts": 1,
+          "remediates": null
+        },
+        {
+          "id": "corrected-batch",
+          "state": "done",
+          "token": 1,
+          "attempts": 1,
+          "remediates": "bad-schema"
+        },
+        {
+          "id": "duplicate-delivery",
+          "state": "done",
+          "token": 1,
+          "attempts": 1,
+          "remediates": null
+        }
+      ],
+      "incidents": [
+        {
+          "job_id": "bad-schema",
+          "reason": "Event schema mismatch",
+          "state": "open",
+          "replacement": null
+        }
+      ],
+      "trusted_report": {
+        "version": 1,
+        "digest": "0cc1990a461d48fd4ebac70c60476f9ca4880953d3c44ff61ef12ae92297ba14",
+        "daily": [
+          {
+            "accounts": 2,
+            "buyers": 1,
+            "day": "2026-01-01",
+            "events": 2
+          }
+        ],
+        "metric": "daily distinct buyers / observed accounts; not a causal conversion estimate",
+        "source_digest": "72801d6d50fee02bff8317dbaaf3a9d43e7b955e4fa1da1d1104912ebba8d00d"
+      },
+      "audit": [
+        {
+          "id": 1,
+          "action": "queued",
+          "detail": "{\"digest\":\"9a2e02e4b30057a29c40f3bde44ad517cbc2424bb02e3edb9a184e742c064a2b\",\"job\":\"baseline\"}"
+        },
+        {
+          "id": 2,
+          "action": "claimed",
+          "detail": "{\"job\":\"baseline\",\"token\":1,\"worker\":\"worker\"}"
+        },
+        {
+          "id": 3,
+          "action": "completed",
+          "detail": "{\"duplicates\":0,\"inserted\":2,\"job\":\"baseline\"}"
+        },
+        {
+          "id": 4,
+          "action": "published",
+          "detail": "{\"digest\":\"0cc1990a461d48fd4ebac70c60476f9ca4880953d3c44ff61ef12ae92297ba14\",\"version\":1}"
+        },
+        {
+          "id": 5,
+          "action": "queued",
+          "detail": "{\"digest\":\"9a2e02e4b30057a29c40f3bde44ad517cbc2424bb02e3edb9a184e742c064a2b\",\"job\":\"duplicate-delivery\"}"
+        },
+        {
+          "id": 6,
+          "action": "claimed",
+          "detail": "{\"job\":\"duplicate-delivery\",\"token\":1,\"worker\":\"worker\"}"
+        },
+        {
+          "id": 7,
+          "action": "completed",
+          "detail": "{\"duplicates\":2,\"inserted\":0,\"job\":\"duplicate-delivery\"}"
+        },
+        {
+          "id": 8,
+          "action": "queued",
+          "detail": "{\"digest\":\"92db6985a69cdbd7caf11ff50b05f9bff215d48d1a85e7f45bde34d6f6076de5\",\"job\":\"bad-schema\"}"
+        },
+        {
+          "id": 9,
+          "action": "claimed",
+          "detail": "{\"job\":\"bad-schema\",\"token\":1,\"worker\":\"worker\"}"
+        },
+        {
+          "id": 10,
+          "action": "rejected",
+          "detail": "{\"job\":\"bad-schema\",\"reason\":\"Event schema mismatch\"}"
+        },
+        {
+          "id": 11,
+          "action": "queued",
+          "detail": "{\"digest\":\"6e91fef80678c4d75713eb011f2937b4d2aec4a54cd84e133decbc2c60e0fe38\",\"job\":\"corrected-batch\"}"
+        },
+        {
+          "id": 12,
+          "action": "claimed",
+          "detail": "{\"job\":\"corrected-batch\",\"token\":1,\"worker\":\"worker\"}"
+        },
+        {
+          "id": 13,
+          "action": "completed",
+          "detail": "{\"duplicates\":0,\"inserted\":2,\"job\":\"corrected-batch\"}"
+        }
+      ]
+    },
+    {
+      "title": "Controlled release",
+      "explanation": "The linked replacement is complete, the incident is resolved, and report version 2 is published.",
+      "jobs": [
+        {
+          "id": "bad-schema",
+          "state": "failed",
+          "token": 1,
+          "attempts": 1,
+          "remediates": null
+        },
+        {
+          "id": "baseline",
+          "state": "done",
+          "token": 1,
+          "attempts": 1,
+          "remediates": null
+        },
+        {
+          "id": "corrected-batch",
+          "state": "done",
+          "token": 1,
+          "attempts": 1,
+          "remediates": "bad-schema"
+        },
+        {
+          "id": "duplicate-delivery",
+          "state": "done",
+          "token": 1,
+          "attempts": 1,
+          "remediates": null
+        }
+      ],
+      "incidents": [
+        {
+          "job_id": "bad-schema",
+          "reason": "Event schema mismatch",
+          "state": "resolved",
+          "replacement": "corrected-batch"
+        }
+      ],
+      "trusted_report": {
+        "version": 2,
+        "digest": "bd4d8146e79b08a36f5d4fd85e94a6f4259421c8fc27effa699cd0ee8444717c",
+        "daily": [
+          {
+            "accounts": 4,
+            "buyers": 1,
+            "day": "2026-01-01",
+            "events": 4
+          }
+        ],
+        "metric": "daily distinct buyers / observed accounts; not a causal conversion estimate",
+        "source_digest": "bfbf3e6ff17fb3388ccbb351d38479fc5573401900988edfae41486a75861761"
+      },
+      "audit": [
+        {
+          "id": 1,
+          "action": "queued",
+          "detail": "{\"digest\":\"9a2e02e4b30057a29c40f3bde44ad517cbc2424bb02e3edb9a184e742c064a2b\",\"job\":\"baseline\"}"
+        },
+        {
+          "id": 2,
+          "action": "claimed",
+          "detail": "{\"job\":\"baseline\",\"token\":1,\"worker\":\"worker\"}"
+        },
+        {
+          "id": 3,
+          "action": "completed",
+          "detail": "{\"duplicates\":0,\"inserted\":2,\"job\":\"baseline\"}"
+        },
+        {
+          "id": 4,
+          "action": "published",
+          "detail": "{\"digest\":\"0cc1990a461d48fd4ebac70c60476f9ca4880953d3c44ff61ef12ae92297ba14\",\"version\":1}"
+        },
+        {
+          "id": 5,
+          "action": "queued",
+          "detail": "{\"digest\":\"9a2e02e4b30057a29c40f3bde44ad517cbc2424bb02e3edb9a184e742c064a2b\",\"job\":\"duplicate-delivery\"}"
+        },
+        {
+          "id": 6,
+          "action": "claimed",
+          "detail": "{\"job\":\"duplicate-delivery\",\"token\":1,\"worker\":\"worker\"}"
+        },
+        {
+          "id": 7,
+          "action": "completed",
+          "detail": "{\"duplicates\":2,\"inserted\":0,\"job\":\"duplicate-delivery\"}"
+        },
+        {
+          "id": 8,
+          "action": "queued",
+          "detail": "{\"digest\":\"92db6985a69cdbd7caf11ff50b05f9bff215d48d1a85e7f45bde34d6f6076de5\",\"job\":\"bad-schema\"}"
+        },
+        {
+          "id": 9,
+          "action": "claimed",
+          "detail": "{\"job\":\"bad-schema\",\"token\":1,\"worker\":\"worker\"}"
+        },
+        {
+          "id": 10,
+          "action": "rejected",
+          "detail": "{\"job\":\"bad-schema\",\"reason\":\"Event schema mismatch\"}"
+        },
+        {
+          "id": 11,
+          "action": "queued",
+          "detail": "{\"digest\":\"6e91fef80678c4d75713eb011f2937b4d2aec4a54cd84e133decbc2c60e0fe38\",\"job\":\"corrected-batch\"}"
+        },
+        {
+          "id": 12,
+          "action": "claimed",
+          "detail": "{\"job\":\"corrected-batch\",\"token\":1,\"worker\":\"worker\"}"
+        },
+        {
+          "id": 13,
+          "action": "completed",
+          "detail": "{\"duplicates\":0,\"inserted\":2,\"job\":\"corrected-batch\"}"
+        },
+        {
+          "id": 14,
+          "action": "incident_resolved",
+          "detail": "{\"incident\":\"bad-schema\",\"replacement\":\"corrected-batch\"}"
+        },
+        {
+          "id": 15,
+          "action": "published",
+          "detail": "{\"digest\":\"bd4d8146e79b08a36f5d4fd85e94a6f4259421c8fc27effa699cd0ee8444717c\",\"version\":2}"
+        }
+      ]
+    },
+    {
+      "title": "Lease recovery and restatement",
+      "explanation": "An expired worker is fenced out. A replacement worker completes the late purchase; historical counts are restated in version 3.",
+      "jobs": [
+        {
+          "id": "bad-schema",
+          "state": "failed",
+          "token": 1,
+          "attempts": 1,
+          "remediates": null
+        },
+        {
+          "id": "baseline",
+          "state": "done",
+          "token": 1,
+          "attempts": 1,
+          "remediates": null
+        },
+        {
+          "id": "corrected-batch",
+          "state": "done",
+          "token": 1,
+          "attempts": 1,
+          "remediates": "bad-schema"
+        },
+        {
+          "id": "duplicate-delivery",
+          "state": "done",
+          "token": 1,
+          "attempts": 1,
+          "remediates": null
+        },
+        {
+          "id": "late-purchase",
+          "state": "done",
+          "token": 2,
+          "attempts": 2,
+          "remediates": null
+        }
+      ],
+      "incidents": [
+        {
+          "job_id": "bad-schema",
+          "reason": "Event schema mismatch",
+          "state": "resolved",
+          "replacement": "corrected-batch"
+        }
+      ],
+      "trusted_report": {
+        "version": 3,
+        "digest": "d68ad9f43cf409a9e8b4d01bd9fd74378d8e3a3104da0f3a7786d1e4e26e46fe",
+        "daily": [
+          {
+            "accounts": 5,
+            "buyers": 2,
+            "day": "2026-01-01",
+            "events": 5
+          }
+        ],
+        "metric": "daily distinct buyers / observed accounts; not a causal conversion estimate",
+        "source_digest": "20911dc660a680ecb13041d6844978451abde2b1d83d86ab9b7e26a67c415b81"
+      },
+      "audit": [
+        {
+          "id": 1,
+          "action": "queued",
+          "detail": "{\"digest\":\"9a2e02e4b30057a29c40f3bde44ad517cbc2424bb02e3edb9a184e742c064a2b\",\"job\":\"baseline\"}"
+        },
+        {
+          "id": 2,
+          "action": "claimed",
+          "detail": "{\"job\":\"baseline\",\"token\":1,\"worker\":\"worker\"}"
+        },
+        {
+          "id": 3,
+          "action": "completed",
+          "detail": "{\"duplicates\":0,\"inserted\":2,\"job\":\"baseline\"}"
+        },
+        {
+          "id": 4,
+          "action": "published",
+          "detail": "{\"digest\":\"0cc1990a461d48fd4ebac70c60476f9ca4880953d3c44ff61ef12ae92297ba14\",\"version\":1}"
+        },
+        {
+          "id": 5,
+          "action": "queued",
+          "detail": "{\"digest\":\"9a2e02e4b30057a29c40f3bde44ad517cbc2424bb02e3edb9a184e742c064a2b\",\"job\":\"duplicate-delivery\"}"
+        },
+        {
+          "id": 6,
+          "action": "claimed",
+          "detail": "{\"job\":\"duplicate-delivery\",\"token\":1,\"worker\":\"worker\"}"
+        },
+        {
+          "id": 7,
+          "action": "completed",
+          "detail": "{\"duplicates\":2,\"inserted\":0,\"job\":\"duplicate-delivery\"}"
+        },
+        {
+          "id": 8,
+          "action": "queued",
+          "detail": "{\"digest\":\"92db6985a69cdbd7caf11ff50b05f9bff215d48d1a85e7f45bde34d6f6076de5\",\"job\":\"bad-schema\"}"
+        },
+        {
+          "id": 9,
+          "action": "claimed",
+          "detail": "{\"job\":\"bad-schema\",\"token\":1,\"worker\":\"worker\"}"
+        },
+        {
+          "id": 10,
+          "action": "rejected",
+          "detail": "{\"job\":\"bad-schema\",\"reason\":\"Event schema mismatch\"}"
+        },
+        {
+          "id": 11,
+          "action": "queued",
+          "detail": "{\"digest\":\"6e91fef80678c4d75713eb011f2937b4d2aec4a54cd84e133decbc2c60e0fe38\",\"job\":\"corrected-batch\"}"
+        },
+        {
+          "id": 12,
+          "action": "claimed",
+          "detail": "{\"job\":\"corrected-batch\",\"token\":1,\"worker\":\"worker\"}"
+        },
+        {
+          "id": 13,
+          "action": "completed",
+          "detail": "{\"duplicates\":0,\"inserted\":2,\"job\":\"corrected-batch\"}"
+        },
+        {
+          "id": 14,
+          "action": "incident_resolved",
+          "detail": "{\"incident\":\"bad-schema\",\"replacement\":\"corrected-batch\"}"
+        },
+        {
+          "id": 15,
+          "action": "published",
+          "detail": "{\"digest\":\"bd4d8146e79b08a36f5d4fd85e94a6f4259421c8fc27effa699cd0ee8444717c\",\"version\":2}"
+        },
+        {
+          "id": 16,
+          "action": "queued",
+          "detail": "{\"digest\":\"fe02bcc43a34d5c3b1db8703b2cb8dd203832b416412b7bbfd000744cf5e1da4\",\"job\":\"late-purchase\"}"
+        },
+        {
+          "id": 17,
+          "action": "claimed",
+          "detail": "{\"job\":\"late-purchase\",\"token\":1,\"worker\":\"lost-worker\"}"
+        },
+        {
+          "id": 18,
+          "action": "claimed",
+          "detail": "{\"job\":\"late-purchase\",\"token\":2,\"worker\":\"recovery-worker\"}"
+        },
+        {
+          "id": 19,
+          "action": "completed",
+          "detail": "{\"duplicates\":0,\"inserted\":1,\"job\":\"late-purchase\"}"
+        },
+        {
+          "id": 20,
+          "action": "published",
+          "detail": "{\"digest\":\"d68ad9f43cf409a9e8b4d01bd9fd74378d8e3a3104da0f3a7786d1e4e26e46fe\",\"version\":3}"
+        }
+      ]
+    }
+  ]
+}
