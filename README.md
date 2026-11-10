@@ -4,6 +4,12 @@
 
 [Interactive replay](https://portfolio-lac-five-10.vercel.app/projects/productops-control-tower/) · [Architecture](docs/architecture.md) · [Decision brief](docs/decision-brief.md) · [Delivery playbook](docs/delivery.md)
 
+## Added: a defensible product decision
+
+[Experiment study](docs/experiment-decision.md) · [Requirements-to-tests](docs/requirements.md) · [Calculated evidence](evidence/experiment.json)
+
+A 20,000-account synthetic case calculates uncertainty, support guardrails, assignment balance, segment estimates, missing-outcome bounds and economic sensitivities. The result is HOLD despite positive conversion. Run `python -m tower.analysis` to rebuild it. This is a designed policy stress test, not a real experiment.
+
 ## The decision
 
 Can a team publish its behavioral metrics after a failed delivery? The system retains immutable reports, fences expired workers, rejects conflicting events atomically, opens incidents, and blocks publication until queued work and incident remediation are complete. Replayed events do not inflate counts.
@@ -36,7 +42,7 @@ finally:
 
 ## Evidence
 
-- 19 regression tests include an actual process exit, concurrent worker processes, lease fencing, retry exhaustion, atomic rollback, incident linkage, late events and immutable history.
+- Core regression tests include an actual process exit, concurrent worker processes, lease fencing, retry exhaustion, atomic rollback, incident linkage, late events and immutable history.
 - `evidence/demo.json` is rebuilt by executing six stages, not manually inventing success states. CI requires byte-identical regeneration.
 - `evidence/load.json` preserves one local 100,000-event measurement with environment and source hashes. Timings vary; CI uploads its own measurement rather than pretending it is identical.
 - Events reconcile to an independent expected count. Worker distribution is reported, including workers that claimed no jobs. Four started processes do not establish parallel write throughput.

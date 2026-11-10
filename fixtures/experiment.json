@@ -1,0 +1,11 @@
+{
+  "scope": "Synthetic aggregate fixture, designed to test a decision policy. No real users or measured business impact.",
+  "unit": "account",
+  "window_days": 14,
+  "rows": [
+    {"segment":"new","arm":"control","assigned":5000,"converted":400,"support":50,"missing":100},
+    {"segment":"new","arm":"treatment","assigned":5000,"converted":500,"support":100,"missing":100},
+    {"segment":"returning","arm":"control","assigned":5000,"converted":800,"support":50,"missing":100},
+    {"segment":"returning","arm":"treatment","assigned":5000,"converted":850,"support":100,"missing":100}
+  ]
+}

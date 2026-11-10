@@ -3,7 +3,10 @@
   "rows": 100000,
   "processes_started": 4,
   "jobs_by_worker": {
-    "worker-0": 100
+    "worker-0": 0,
+    "worker-1": 0,
+    "worker-2": 29,
+    "worker-3": 71
   },
   "reconciled": true,
   "metrics": {
@@ -13,10 +16,10 @@
     "buyers": 2000
   },
   "seconds": {
-    "enqueue": 0.134933,
-    "consume": 1.092772,
-    "publish": 0.221928,
-    "total": 1.449633
+    "enqueue": 0.176002,
+    "consume": 1.027334,
+    "publish": 0.227542,
+    "total": 1.430878
   },
   "environment": {
     "python": "3.12.14",
@@ -25,8 +28,9 @@
   },
   "source_sha256": {
     "__init__.py": "6ccdd874ad90d11caf51c2f6cac9fa502f6db4e248675f14b436199979d871f7",
+    "analysis.py": "9b2381169fffaaee0c5248a1f068cfea9d1e1b114972d6b488d78b0514881881",
     "core.py": "cb15183c58787c06cbbd551671fbc48d33a24c6947a45b29ea0bc710f93e9927",
-    "demo.py": "47ec3fdcf1facf3dc0fe2070dce18b0d3835e5d502a8b3eb2f94ba499beb2255",
-    "load.py": "9544ecf362cf16a472967dfa71e2aef860d2fab4ad6cf37bdeddedddb62643f2"
+    "demo.py": "473ee51f293999eafc190c96b2b25588ead06238484485dd915bd6cea4c38253",
+    "load.py": "b9ca8c27c3ab89f6854917a2add244be34ffb4baef86fb659d8f2550765ac556"
   }
 }

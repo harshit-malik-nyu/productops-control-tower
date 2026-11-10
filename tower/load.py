@@ -33,7 +33,7 @@ def run(rows=100000,workers=4):
             if not all(j['state']=='done' and j['attempts']==1 for j in snapshot['jobs']):raise AssertionError('Queue did not complete exactly once in this run')
             ownership=Counter(r['worker'] for r in t.db.execute('SELECT worker FROM jobs'))
             return {'scope':'Synthetic single-host SQLite experiment. Four processes contend for one writer. No distributed throughput, multi-region reliability or production SLA claim.',
-                    'rows':rows,'processes_started':workers,'jobs_by_worker':dict(ownership),'reconciled':True,'metrics':observed,
+                    'rows':rows,'processes_started':workers,'jobs_by_worker':{f'worker-{i}':ownership[f'worker-{i}'] for i in range(workers)},'reconciled':True,'metrics':observed,
                     'seconds':{'enqueue':round(queued-begin,6),'consume':round(consumed-queued,6),'publish':round(done-consumed,6),'total':round(done-begin,6)},
                     'environment':{'python':platform.python_version(),'sqlite':sqlite3.sqlite_version,'system':platform.system()},
                     'source_sha256':{p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(Path(__file__).parent.glob('*.py'))}}

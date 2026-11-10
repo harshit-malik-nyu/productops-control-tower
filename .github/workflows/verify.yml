@@ -15,7 +15,7 @@ jobs:
           python-version: ${{ matrix.python }}
       - run: python -m unittest discover -s tests -v
       - run: python -m tower.demo
-      - run: git diff --exit-code -- evidence/demo.json site/index.html
+      - run: git diff --exit-code -- evidence/demo.json evidence/experiment.json site/index.html
       - run: python -m tower.load --output /tmp/control-tower-load.json
       - uses: actions/upload-artifact@v4
         with:

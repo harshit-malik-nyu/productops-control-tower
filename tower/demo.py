@@ -33,7 +33,8 @@ def build():
             return {'scope':'Executed synthetic local demonstration. Replay only; no customer incident, user study or production SLA claim.','frames':frames}
         finally:t.close()
 if __name__=='__main__':
-    root=Path(__file__).resolve().parents[1];data=build()
+    from .analysis import build as analysis_build, section
+    root=Path(__file__).resolve().parents[1];data=build();experiment=analysis_build()
     (root/'evidence/demo.json').write_text(json.dumps(data,indent=2)+'\n')
-    (root/'site/index.html').write_text((root/'site/template.html').read_text().replace('__DATA__',json.dumps(data,separators=(',',':')).replace('<','\\u003c')))
+    (root/'site/index.html').write_text((root/'site/template.html').read_text().replace('__EXPERIMENT__',section(experiment)).replace('__DATA__',json.dumps(data,separators=(',',':')).replace('<','\\u003c')))
     print('Six executed incident-to-release frames generated.')
